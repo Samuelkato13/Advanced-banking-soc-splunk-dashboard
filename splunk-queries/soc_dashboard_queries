@@ -1,0 +1,22 @@
+Detection Logic
+
+##Port Scanning Detection
+index=main event=PORT_SCAN
+| stats count by src_ip
+| sort -count
+
+##Traffic Spike Detection
+index=main event=TRAFFIC_SPIKE
+| timechart count
+
+##Top Talkers
+index=main
+| stats count by src_ip
+| sort -count
+| head 10
+
+##Suspicious Activity
+index=main
+| stats count by src_ip, event
+| where count > 20
+| sort -count
